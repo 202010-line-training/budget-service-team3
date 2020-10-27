@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.time.format.DateTimeFormatter.*;
+
 public class BudgetService {
     private final IBudgetRepo repo;
     private Map<String, Budget> budgetMap;
@@ -45,7 +47,7 @@ public class BudgetService {
     }
 
     private String getYearMonthOfDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyyMM"));
+        return date.format(ofPattern("yyyyMM"));
     }
 
     private double getFirstMonthBudget(LocalDate start) {
@@ -63,10 +65,13 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            YearMonth yearMonthOfBudget = YearMonth.parse(budget.getYearMonth(), DateTimeFormatter.ofPattern("yyyyMM"));
-            return budget.getAmount() / yearMonthOfBudget.lengthOfMonth();
-//            return budget.getAmount() / getNumberOfDay(date);
+            return dailyAmount(budget);
         }
+    }
+
+    private double dailyAmount(Budget budget) {
+        YearMonth yearMonthOfBudget = YearMonth.parse(budget.getYearMonth(), ofPattern("yyyyMM"));
+        return (double) budget.getAmount() / yearMonthOfBudget.lengthOfMonth();
     }
 
     private int getNumberOfDay(LocalDate date) {
