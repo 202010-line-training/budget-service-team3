@@ -38,14 +38,13 @@ public class BudgetService {
         LocalDate current = LocalDate.of(start.getYear(), start.getMonthValue(), 1);
         current = current.plusMonths(1);
         while (current.getYear() != end.getYear() || current.getMonthValue() != end.getMonthValue()) {
-            ans += getEntireMonth(current, allBudgets);
+            ans += getEntireMonth(budgetMap.get(getYearMonthOfDate(current)));
             current = current.plusMonths(1);
         }
         return ans;
     }
 
-    private double getEntireMonth(LocalDate start, List<Budget> allBudgets) {
-        Budget budget = budgetMap.get(getYearMonthOfDate(start));
+    private double getEntireMonth(Budget budget) {
         if (budget == null) {
             return 0;
         } else {

@@ -76,4 +76,14 @@ public class BudgetServiceTest {
         assertThat(budgetService.query(LocalDate.of(2020, 8, 30),
                 LocalDate.of(2020, 10, 3))).isEqualTo(320.0);
     }
+
+    @Test
+    public void same_month_different_year() {
+        when(repo.getAll()).thenReturn(Arrays.asList(
+                new Budget("201908", 310),
+                new Budget("202008", 31)));
+
+        assertThat(budgetService.query(LocalDate.of(2019, 8, 30),
+                LocalDate.of(2020, 8, 3))).isEqualTo(23.0);
+    }
 }
