@@ -30,7 +30,11 @@ public class Budget {
     }
 
     double dailyAmount() {
-        YearMonth yearMonthOfBudget = YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
+        YearMonth yearMonthOfBudget = getMonth();
         return (double) getAmount() / yearMonthOfBudget.lengthOfMonth();
+    }
+
+    public YearMonth getMonth() {
+        return YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
     }
 }
