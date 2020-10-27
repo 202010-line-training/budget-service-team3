@@ -70,7 +70,8 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            int dayCount = end.getDayOfMonth();
+//            int endDate = end.getDayOfMonth();
+            long dayCount = DAYS.between(budget.getMonth().atDay(1), end) + 1;
             return budget.dailyAmount() * dayCount;
         }
     }
