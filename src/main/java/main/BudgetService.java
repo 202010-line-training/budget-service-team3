@@ -61,10 +61,6 @@ public class BudgetService {
             return 0;
         } else {
             long dayCount = DAYS.between(start, budget.getMonth().atEndOfMonth()) + 1;
-//            int dayOfMonth = start.getDayOfMonth();
-//            int endOfMonth = budget.getMonth().lengthOfMonth();
-//            int endOfMonth = getNumberOfDay(start);
-//            int dayCount = endOfMonth - dayOfMonth + 1;
             return budget.dailyAmount() * dayCount;
         }
     }
