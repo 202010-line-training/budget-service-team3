@@ -30,13 +30,13 @@ public class Budget {
         this.amount = amount;
     }
 
+    public YearMonth getMonth() {
+        return YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
+    }
+
     double dailyAmount() {
         YearMonth yearMonthOfBudget = getMonth();
         return (double) getAmount() / yearMonthOfBudget.lengthOfMonth();
-    }
-
-    public YearMonth getMonth() {
-        return YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
     }
 
     LocalDate firstDay() {
@@ -45,5 +45,9 @@ public class Budget {
 
     LocalDate lastDay() {
         return getMonth().atEndOfMonth();
+    }
+
+    Period createPeriod() {
+        return new Period(firstDay(), lastDay());
     }
 }

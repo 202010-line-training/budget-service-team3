@@ -39,16 +39,12 @@ public class BudgetService {
         while (YearMonth.from(current).isBefore(YearMonth.from(end.plusMonths(1)))) {
             Budget budget = budgetMap.get(getYearMonthOfDate(current));
             if (budget != null) {
-                long overlappingDays = new Period(start, end).getOverlappingDays(createPeriod(budget));
+                long overlappingDays = new Period(start, end).getOverlappingDays(budget.createPeriod());
                 ans += budget.dailyAmount() * overlappingDays;
             }
             current = current.plusMonths(1);
         }
         return ans;
-    }
-
-    private Period createPeriod(Budget budget) {
-        return new Period(budget.firstDay(), budget.lastDay());
     }
 
     private double getEntireMonth(Budget budget) {
