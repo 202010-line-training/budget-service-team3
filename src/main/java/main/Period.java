@@ -14,6 +14,7 @@ public class Period {
     }
 
     public long getOverlappingDays(Period another) {
+        // here are some bugs when no overlapping
         LocalDate overlappingStart = start.isAfter(another.start)
                 ? start
                 : another.start;
