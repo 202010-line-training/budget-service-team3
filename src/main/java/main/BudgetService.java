@@ -22,17 +22,17 @@ public class BudgetService {
             return 0;
         }
         List<Budget> allBudgets = repo.getAll();
-        budgetMap = allBudgets.stream()
-                .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
-        if (YearMonth.from(start).equals(YearMonth.from(end))) {
-            Budget budget = budgetMap.get(getYearMonthOfDate(start));
-            if (budget == null) {
-                return 0;
-            } else {
-                final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
-                return budget.dailyAmount() * intervalDays;
-            }
-        }
+//        budgetMap = allBudgets.stream()
+//                .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
+//        if (YearMonth.from(start).equals(YearMonth.from(end))) {
+//            Budget budget = budgetMap.get(getYearMonthOfDate(start));
+//            if (budget == null) {
+//                return 0;
+//            } else {
+//                final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
+//                return budget.dailyAmount() * intervalDays;
+//            }
+//        }
 
         Period period = new Period(start, end);
         double ans = 0;
