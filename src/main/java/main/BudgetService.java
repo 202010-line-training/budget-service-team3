@@ -57,7 +57,8 @@ public class BudgetService {
     private double getFirstMonthBudget(LocalDate start) {
         int dayOfMonth = start.getDayOfMonth();
         int dayCount = getNumberOfDay(start) - dayOfMonth + 1;
-        return getSingleDayBudget(budgetMap.get(getYearMonthOfDate(start))) * dayCount;
+        Budget budget = budgetMap.get(getYearMonthOfDate(start));
+        return getSingleDayBudget(budget) * dayCount;
     }
 
     private double getLastMonthBudget(LocalDate end) {
