@@ -44,17 +44,14 @@ public class BudgetService {
         return ans;
     }
 
-    private int getEntireMonth(LocalDate start, List<Budget> allBudgets) {
-        Budget budget = budgetMap.get(start);
+    private double getEntireMonth(LocalDate start, List<Budget> allBudgets) {
+        Budget budget = budgetMap.get(getYearMonthOfDate(start));
         if (budget == null) {
             return 0;
         } else {
-            return budget.getAmount();
+            long dayCount = DAYS.between(budget.firstDay(), budget.lastDay());
+            return budget.dailyAmount() * dayCount;
         }
-//        return allBudgets.stream()
-//                .filter(budget -> budget.getYearMonth()
-//                        .equals(getYearMonthOfDate(start)))
-//                .findFirst().get().getAmount();
     }
 
     private String getYearMonthOfDate(LocalDate date) {
