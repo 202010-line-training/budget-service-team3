@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.time.format.DateTimeFormatter.*;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class BudgetService {
     private final IBudgetRepo repo;
@@ -59,10 +60,11 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            int dayOfMonth = start.getDayOfMonth();
-            int endOfMonth = budget.getMonth().lengthOfMonth();
+            long dayCount = DAYS.between(start, budget.getMonth().atEndOfMonth()) + 1;
+//            int dayOfMonth = start.getDayOfMonth();
+//            int endOfMonth = budget.getMonth().lengthOfMonth();
 //            int endOfMonth = getNumberOfDay(start);
-            int dayCount = endOfMonth - dayOfMonth + 1;
+//            int dayCount = endOfMonth - dayOfMonth + 1;
             return budget.dailyAmount() * dayCount;
         }
     }
