@@ -2,7 +2,6 @@ package main;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,13 +64,8 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            return dailyAmount(budget);
+            return budget.dailyAmount();
         }
-    }
-
-    private double dailyAmount(Budget budget) {
-        YearMonth yearMonthOfBudget = YearMonth.parse(budget.getYearMonth(), ofPattern("yyyyMM"));
-        return (double) budget.getAmount() / yearMonthOfBudget.lengthOfMonth();
     }
 
     private int getNumberOfDay(LocalDate date) {

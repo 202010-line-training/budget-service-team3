@@ -1,5 +1,8 @@
 package main;
 
+import java.time.YearMonth;
+
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 public class Budget {
     private String yearMonth;
@@ -24,5 +27,10 @@ public class Budget {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    double dailyAmount() {
+        YearMonth yearMonthOfBudget = YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
+        return (double) getAmount() / yearMonthOfBudget.lengthOfMonth();
     }
 }
