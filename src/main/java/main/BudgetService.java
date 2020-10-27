@@ -43,7 +43,14 @@ public class BudgetService {
                     long dayCount = DAYS.between(start, budget.lastDay()) + 1;
                     ans += budget.dailyAmount() * dayCount;
                 } else if (YearMonth.from(current).equals(YearMonth.from(end))) {
-                    double lastMonthBudget = getLastMonthBudget(end);
+                    double lastMonthBudget;
+//                    Budget budget = budgetMap.get(getYearMonthOfDate(end));
+//                    if (budget == null) {
+//                        lastMonthBudget = 0;
+//                    } else {
+                    long dayCount = DAYS.between(budget.firstDay(), end) + 1;
+                    lastMonthBudget = budget.dailyAmount() * dayCount;
+//                    }
                     ans += lastMonthBudget;
                 } else {
                     long dayCount = DAYS.between(budget.firstDay(), budget.lastDay());
