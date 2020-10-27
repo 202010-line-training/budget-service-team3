@@ -70,13 +70,9 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            long dayCount = DAYS.between(firstDay(budget), end) + 1;
+            long dayCount = DAYS.between(budget.firstDay(), end) + 1;
             return budget.dailyAmount() * dayCount;
         }
-    }
-
-    private LocalDate firstDay(Budget budget) {
-        return budget.getMonth().atDay(1);
     }
 
     private double getSingleDayBudget(Budget budget) {
