@@ -45,10 +45,16 @@ public class BudgetService {
     }
 
     private int getEntireMonth(LocalDate start, List<Budget> allBudgets) {
-        return allBudgets.stream()
-                .filter(budget -> budget.getYearMonth()
-                        .equals(getYearMonthOfDate(start)))
-                .findFirst().get().getAmount();
+        Budget budget = budgetMap.get(start);
+        if (budget == null) {
+            return 0;
+        } else {
+            return budget.getAmount();
+        }
+//        return allBudgets.stream()
+//                .filter(budget -> budget.getYearMonth()
+//                        .equals(getYearMonthOfDate(start)))
+//                .findFirst().get().getAmount();
     }
 
     private String getYearMonthOfDate(LocalDate date) {
