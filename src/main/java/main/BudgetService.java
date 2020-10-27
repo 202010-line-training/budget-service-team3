@@ -66,7 +66,13 @@ public class BudgetService {
     }
 
     private double getLastMonthBudget(LocalDate end) {
-        return getSingleDayBudget(budgetMap.get(getYearMonthOfDate(end))) * end.getDayOfMonth();
+        Budget budget = budgetMap.get(getYearMonthOfDate(end));
+        if (budget == null) {
+            return 0;
+        } else {
+            int dayCount = end.getDayOfMonth();
+            return budget.dailyAmount() * dayCount;
+        }
     }
 
     private double getSingleDayBudget(Budget budget) {
