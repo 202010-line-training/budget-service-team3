@@ -42,14 +42,14 @@ public class BudgetService {
                 long dayCount;
                 if (YearMonth.from(current).equals(YearMonth.from(start))) {
                     dayCount = DAYS.between(start, budget.lastDay()) + 1;
-                    ans += budget.dailyAmount() * dayCount;
+//                    ans += budget.dailyAmount() * dayCount;
                 } else if (YearMonth.from(current).equals(YearMonth.from(end))) {
                     dayCount = DAYS.between(budget.firstDay(), end) + 1;
-                    ans += budget.dailyAmount() * dayCount;
+//                    ans += budget.dailyAmount() * dayCount;
                 } else {
                     dayCount = DAYS.between(budget.firstDay(), budget.lastDay());
-                    ans += budget.dailyAmount() * dayCount;
                 }
+                ans += budget.dailyAmount() * dayCount;
             }
             current = current.plusMonths(1);
         }
