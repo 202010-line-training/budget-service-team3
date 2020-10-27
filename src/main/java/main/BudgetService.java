@@ -40,14 +40,8 @@ public class BudgetService {
             Budget budget = budgetMap.get(getYearMonthOfDate(current));
             if (budget != null) {
                 if (YearMonth.from(current).equals(YearMonth.from(start))) {
-                    double firstMonthBudget;
-//                    if (budget1 == null) {
-//                        firstMonthBudget = 0;
-//                    } else {
                     long dayCount = DAYS.between(start, budget.lastDay()) + 1;
-                    firstMonthBudget = budget.dailyAmount() * dayCount;
-//                    }
-                    ans += firstMonthBudget;
+                    ans += budget.dailyAmount() * dayCount;
                 } else if (YearMonth.from(current).equals(YearMonth.from(end))) {
                     double lastMonthBudget = getLastMonthBudget(end);
                     ans += lastMonthBudget;
