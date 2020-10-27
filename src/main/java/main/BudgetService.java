@@ -60,9 +60,9 @@ public class BudgetService {
 
     private double getSingleDayBudget(LocalDate date) {
         Budget budget = budgetMap.get(getYearMonthOfDate(date));
-        int budgetOfMonth = budget == null ? 0 : budget.getAmount();
+        int amount = budget == null ? 0 : budget.getAmount();
 
-        return budgetOfMonth / getNumberOfDay(date);
+        return amount / getNumberOfDay(date);
     }
 
     private int getNumberOfDay(LocalDate date) {
