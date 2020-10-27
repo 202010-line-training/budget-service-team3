@@ -42,10 +42,11 @@ public class BudgetService {
                 long overlappingDays;
                 LocalDate overlappingStart;
                 LocalDate overlappingEnd;
-                if (YearMonth.from(current).equals(YearMonth.from(start))) {
+                YearMonth currentYearMonth = YearMonth.from(current);
+                if (currentYearMonth.equals(YearMonth.from(start))) {
                     overlappingStart = start;
                     overlappingEnd = budget.lastDay();
-                } else if (YearMonth.from(current).equals(YearMonth.from(end))) {
+                } else if (currentYearMonth.equals(YearMonth.from(end))) {
                     overlappingStart = budget.firstDay();
                     overlappingEnd = end;
                 } else {
