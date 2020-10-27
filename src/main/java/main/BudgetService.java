@@ -24,11 +24,11 @@ public class BudgetService {
         budgetMap = allBudgets.stream()
                 .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
         if (YearMonth.from(start).equals(YearMonth.from(end))) {
-            final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
             Budget budget = budgetMap.get(getYearMonthOfDate(start));
             if (budget == null) {
                 return 0;
             } else {
+                final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
                 return budget.dailyAmount() * intervalDays;
             }
         }
@@ -55,10 +55,14 @@ public class BudgetService {
     }
 
     private double getFirstMonthBudget(LocalDate start) {
-        int dayOfMonth = start.getDayOfMonth();
-        int dayCount = getNumberOfDay(start) - dayOfMonth + 1;
         Budget budget = budgetMap.get(getYearMonthOfDate(start));
-        return getSingleDayBudget(budget) * dayCount;
+        if (budget == null) {
+            return 0;
+        } else {
+            int dayOfMonth = start.getDayOfMonth();
+            int dayCount = getNumberOfDay(start) - dayOfMonth + 1;
+            return budget.dailyAmount() * dayCount;
+        }
     }
 
     private double getLastMonthBudget(LocalDate end) {
