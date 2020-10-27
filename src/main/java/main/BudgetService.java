@@ -63,7 +63,9 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            return budget.getAmount() / getNumberOfDay(date);
+            YearMonth yearMonthOfBudget = YearMonth.parse(budget.getYearMonth(), DateTimeFormatter.ofPattern("yyyyMM"));
+            return budget.getAmount() / yearMonthOfBudget.lengthOfMonth();
+//            return budget.getAmount() / getNumberOfDay(date);
         }
     }
 
