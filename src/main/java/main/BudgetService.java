@@ -54,16 +54,6 @@ public class BudgetService {
         LocalDate overlappingEnd = end.isBefore(budget.lastDay())
                 ? end
                 : budget.lastDay();
-        if (budget.getMonth().equals(YearMonth.from(start))) {
-//            overlappingStart = start;
-//            overlappingEnd = budget.lastDay();
-        } else if (budget.getMonth().equals(YearMonth.from(end))) {
-//            overlappingStart = budget.firstDay();
-//            overlappingEnd = end;
-        } else {
-//            overlappingStart = budget.firstDay();
-//            overlappingEnd = budget.lastDay();
-        }
         return DAYS.between(overlappingStart, overlappingEnd) + 1;
     }
 
