@@ -26,13 +26,11 @@ public class BudgetService {
         if (YearMonth.from(start).equals(YearMonth.from(end))) {
             final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
             Budget budget = budgetMap.get(getYearMonthOfDate(start));
-            double result;
             if (budget == null) {
-                result = 0;
+                return 0;
             } else {
-                result = budget.dailyAmount();
+                return budget.dailyAmount() * intervalDays;
             }
-            return result * intervalDays;
         }
 
         double ans = getFirstMonthBudget(start) + getLastMonthBudget(end);
