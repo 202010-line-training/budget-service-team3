@@ -23,15 +23,14 @@ public class BudgetService {
         budgetMap = allBudgets.stream()
                 .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
         if (YearMonth.from(start).equals(YearMonth.from(end))) {
-//        if (start.getYear() == end.getYear() && start.getMonthValue() == end.getMonthValue()) {
             if (start.getDayOfMonth() == end.getDayOfMonth()) {
                 return getSingleDayBudget(start);
             }
             final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth();
-            if (intervalDays > 0) {
-                return getSingleDayBudget(start) * (intervalDays + 1);
-            }
-            return getEntireMonth(start, allBudgets);
+//            if (intervalDays > 0) {
+            return getSingleDayBudget(start) * (intervalDays + 1);
+//            }
+//            return getEntireMonth(start, allBudgets);
         }
 
         double ans = getFirstMonthBudget(start) + getLastMonthBudget(end);
