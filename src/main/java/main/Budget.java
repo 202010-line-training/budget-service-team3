@@ -45,4 +45,8 @@ public class Budget {
     LocalDate firstDay() {
         return getMonth().atDay(1);
     }
+
+    Period createPeriod() {
+        return new Period(firstDay(), lastDay());
+    }
 }
