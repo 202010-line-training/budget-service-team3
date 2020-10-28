@@ -39,15 +39,15 @@ public class BudgetService {
         return ans;
     }
 
-    private int getEntireMonth(LocalDate start, List<Budget> allBudgets) {
-        return allBudgets.stream()
-                .filter(budget -> budget.getYearMonth()
-                        .equals(getYearMonthOfDate(start)))
-                .findFirst().get().getAmount();
-    }
+    private double getEntireMonth(LocalDate start, List<Budget> allBudgets) {
+        Budget budget = budgetMap.get(getYearMonthOfDate(start));
 
-    private String getYearMonthOfDate(LocalDate date) {
-        return date.format(ofPattern("yyyyMM"));
+        if (budget == null) {
+            return 0;
+        } else {
+            long dayCount = DAYS.between(budget.firstDay(), budget.lastDay()) + 1;
+            return (double) budget.dailyAmount() * dayCount;
+        }
     }
 
     private double getFirstMonthBudget(LocalDate start) {
@@ -56,7 +56,7 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            long dayCount = DAYS.between(start, budget.getMonth().atEndOfMonth()) + 1;
+            long dayCount = DAYS.between(start, budget.lastDay()) + 1;
             return (double) budget.dailyAmount() * dayCount;
         }
     }
@@ -66,7 +66,7 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            long dayCount = DAYS.between(budget.getMonth().atDay(1), end) + 1;
+            long dayCount = DAYS.between(budget.firstDay(), end) + 1;
             return (double) budget.dailyAmount() * dayCount;
         }
     }
@@ -77,6 +77,10 @@ public class BudgetService {
         } else {
             return budget.dailyAmount();
         }
+    }
+
+    private String getYearMonthOfDate(LocalDate date) {
+        return date.format(ofPattern("yyyyMM"));
     }
 
     private int getNumberOfDay(LocalDate date) {
