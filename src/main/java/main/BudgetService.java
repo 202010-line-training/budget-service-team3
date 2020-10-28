@@ -1,6 +1,7 @@
 package main;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -63,8 +64,9 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            int numberOfDay = getNumberOfDay(date);
-            return budget.getAmount() / numberOfDay;
+            int endOfMonth = YearMonth.parse(budget.getYearMonth(), DateTimeFormatter.ofPattern("yyyyMM")).lengthOfMonth();
+//            int endOfMonth = getNumberOfDay(date);
+            return budget.getAmount() / endOfMonth;
         }
     }
 
