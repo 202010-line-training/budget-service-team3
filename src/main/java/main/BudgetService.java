@@ -21,20 +21,12 @@ public class BudgetService {
         if (start.isAfter(end)) {
             return 0;
         }
-        List<Budget> allBudgets = repo.getAll();
-//        budgetMap = allBudgets.stream()
-//                .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
-//        if (YearMonth.from(start).equals(YearMonth.from(end))) {
-//            final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
-//            return getSingleDayBudget(budgetMap.get(getYearMonthOfDate(start))) * intervalDays;
-//        }
 
         Period period = new Period(start, end);
-        double ans = 0;
-        for (Budget budget : allBudgets) {
-            ans += budget.getOverlappingAmount(period);
-        }
-        return ans;
+        return repo.getAll()
+                .stream()
+                .mapToDouble(budget -> budget.getOverlappingAmount(period))
+                .sum();
     }
 
     private double getEntireMonth(LocalDate start, List<Budget> allBudgets) {
