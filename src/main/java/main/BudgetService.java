@@ -32,7 +32,7 @@ public class BudgetService {
         double ans = getFirstMonthBudget(start) + getLastMonthBudget(end);
         LocalDate current = LocalDate.of(start.getYear(), start.getMonthValue(), 1);
         current = current.plusMonths(1);
-        while (current.getYear() != end.getYear() || current.getMonthValue() != end.getMonthValue()) {
+        while (YearMonth.from(current).isBefore(YearMonth.from(end))) {
             ans += getEntireMonth(current, allBudgets);
             current = current.plusMonths(1);
         }
