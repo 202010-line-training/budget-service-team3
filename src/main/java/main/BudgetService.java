@@ -44,7 +44,6 @@ public class BudgetService {
     }
 
     private long getOverlappingDays(LocalDate start, LocalDate end, Budget budget) {
-        long dayCount;
         LocalDate overlappingStart;
         LocalDate overlappingEnd;
         if (budget.getMonth().equals(YearMonth.from(start))) {
@@ -57,8 +56,7 @@ public class BudgetService {
             overlappingStart = budget.firstDay();
             overlappingEnd = budget.lastDay();
         }
-        dayCount = DAYS.between(overlappingStart, overlappingEnd) + 1;
-        return dayCount;
+        return DAYS.between(overlappingStart, overlappingEnd) + 1;
     }
 
     private double getEntireMonth(LocalDate start, List<Budget> allBudgets) {
