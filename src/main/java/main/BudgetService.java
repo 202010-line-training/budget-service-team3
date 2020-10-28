@@ -31,14 +31,18 @@ public class BudgetService {
 
         Period period = new Period(start, end);
         double ans = 0;
-        LocalDate current = start;
-        while (YearMonth.from(current).isBefore(YearMonth.from(end.plusMonths(1)))) {
-            Budget budget = budgetMap.get(getYearMonthOfDate(current));
+//        LocalDate current = start;
+//        for (Budget budget : allBudgets) {
+//
+//        }
+//        while (YearMonth.from(current).isBefore(YearMonth.from(end.plusMonths(1)))) {
+        for (Budget budget : allBudgets) {
+//            Budget budget = budgetMap.get(getYearMonthOfDate(current));
 
-            if (budget != null) {
-                ans += budget.getOverlappingAmount(period);
-            }
-            current = current.plusMonths(1);
+//            if (budget != null) {
+            ans += budget.getOverlappingAmount(period);
+//            }
+//            current = current.plusMonths(1);
         }
         return ans;
     }
