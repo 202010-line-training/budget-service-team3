@@ -14,43 +14,27 @@ public class Budget {
         this.amount = amount;
     }
 
-    public String getYearMonth() {
-        return yearMonth;
+    public double getOverlappingAmount(Period period) {
+        return (double) dailyAmount() * period.getOverlappingDays(createPeriod());
     }
 
-    public void setYearMonth(String yearMonth) {
-        this.yearMonth = yearMonth;
+    private YearMonth getMonth() {
+        return YearMonth.parse(yearMonth, ofPattern("yyyyMM"));
     }
 
-    public int getAmount() {
-        return amount;
+    private int dailyAmount() {
+        return amount / getMonth().lengthOfMonth();
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    YearMonth getMonth() {
-        return YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
-    }
-
-    int dailyAmount() {
-        return getAmount() / getMonth().lengthOfMonth();
-    }
-
-    LocalDate lastDay() {
+    private LocalDate lastDay() {
         return getMonth().atEndOfMonth();
     }
 
-    LocalDate firstDay() {
+    private LocalDate firstDay() {
         return getMonth().atDay(1);
     }
 
-    Period createPeriod() {
+    private Period createPeriod() {
         return new Period(firstDay(), lastDay());
-    }
-
-    double getOverlappingAmount(Period period) {
-        return (double) dailyAmount() * period.getOverlappingDays(createPeriod());
     }
 }
