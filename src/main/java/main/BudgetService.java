@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class BudgetService {
     private final IBudgetRepo repo;
@@ -25,7 +26,7 @@ public class BudgetService {
                 .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
         if (YearMonth.from(start).equals(YearMonth.from(end))) {
             final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth() + 1;
-            return getSingleDayBudget(start) * intervalDays;
+            return getSingleDayBudget(budgetMap.get(getYearMonthOfDate(start))) * intervalDays;
         }
 
         double ans = getFirstMonthBudget(start) + getLastMonthBudget(end);
@@ -50,17 +51,21 @@ public class BudgetService {
     }
 
     private double getFirstMonthBudget(LocalDate start) {
-        int dayOfMonth = start.getDayOfMonth();
-        int dayCount = getNumberOfDay(start) - dayOfMonth + 1;
-        return getSingleDayBudget(start) * dayCount;
+        Budget budget = budgetMap.get(getYearMonthOfDate(start));
+
+        if (budget == null) {
+            return 0;
+        } else {
+            long dayCount = DAYS.between(start, budget.getMonth().atEndOfMonth()) + 1;
+            return (double) budget.dailyAmount() * dayCount;
+        }
     }
 
     private double getLastMonthBudget(LocalDate end) {
-        return getSingleDayBudget(end) * end.getDayOfMonth();
+        return getSingleDayBudget(budgetMap.get(getYearMonthOfDate(end))) * end.getDayOfMonth();
     }
 
-    private double getSingleDayBudget(LocalDate date) {
-        Budget budget = budgetMap.get(getYearMonthOfDate(date));
+    private double getSingleDayBudget(Budget budget) {
         if (budget == null) {
             return 0;
         } else {
