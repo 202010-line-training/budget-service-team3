@@ -36,7 +36,8 @@ public class BudgetService {
 
             if (budget != null) {
                 if (YearMonth.from(current).equals(YearMonth.from(start))) {
-                    ans += getFirstMonthBudget(start);
+                    long dayCount = DAYS.between(start, budget.lastDay()) + 1;
+                    ans += (double) budget.dailyAmount() * dayCount;
                 } else {
                     long dayCount = DAYS.between(budget.firstDay(), budget.lastDay()) + 1;
                     ans += (double) budget.dailyAmount() * dayCount;
