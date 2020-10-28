@@ -64,12 +64,8 @@ public class BudgetService {
         if (budget == null) {
             return 0;
         } else {
-            return dailyAmount(budget);
+            return budget.dailyAmount();
         }
-    }
-
-    private int dailyAmount(Budget budget) {
-        return budget.getAmount() / budget.getMonth().lengthOfMonth();
     }
 
     private int getNumberOfDay(LocalDate date) {

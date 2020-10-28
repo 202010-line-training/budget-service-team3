@@ -32,4 +32,8 @@ public class Budget {
     YearMonth getMonth() {
         return YearMonth.parse(getYearMonth(), ofPattern("yyyyMM"));
     }
+
+    int dailyAmount() {
+        return getAmount() / getMonth().lengthOfMonth();
+    }
 }
