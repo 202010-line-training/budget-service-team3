@@ -30,9 +30,7 @@ public class BudgetService {
         }
 
         double ans = 0;
-//        double ans = getLastMonthBudget(end);
         LocalDate current = start;
-//        LocalDate current = LocalDate.of(start.getYear(), start.getMonthValue(), 1);
         while (YearMonth.from(current).isBefore(YearMonth.from(end.plusMonths(1)))) {
             Budget budget = budgetMap.get(getYearMonthOfDate(current));
 
@@ -41,7 +39,8 @@ public class BudgetService {
                     long dayCount = DAYS.between(start, budget.lastDay()) + 1;
                     ans += (double) budget.dailyAmount() * dayCount;
                 } else if (YearMonth.from(current).equals(YearMonth.from(end))) {
-                    ans += getLastMonthBudget(end);
+                    long dayCount = DAYS.between(budget.firstDay(), end) + 1;
+                    ans += (double) budget.dailyAmount() * dayCount;
                 } else {
                     long dayCount = DAYS.between(budget.firstDay(), budget.lastDay()) + 1;
                     ans += (double) budget.dailyAmount() * dayCount;
