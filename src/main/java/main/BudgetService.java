@@ -35,28 +35,30 @@ public class BudgetService {
             Budget budget = budgetMap.get(getYearMonthOfDate(current));
 
             if (budget != null) {
-                long dayCount;
-                LocalDate overlappingStart;
-                LocalDate overlappingEnd;
-                if (YearMonth.from(current).equals(YearMonth.from(start))) {
-                    overlappingStart = start;
-                    overlappingEnd = budget.lastDay();
-//                    dayCount = DAYS.between(overlappingStart, overlappingEnd) + 1;
-                } else if (YearMonth.from(current).equals(YearMonth.from(end))) {
-                    overlappingStart = budget.firstDay();
-                    overlappingEnd = end;
-//                    dayCount = DAYS.between(overlappingStart, overlappingEnd) + 1;
-                } else {
-                    overlappingStart = budget.firstDay();
-                    overlappingEnd = budget.lastDay();
-//                    dayCount = DAYS.between(overlappingStart, overlappingEnd) + 1;
-                }
-                dayCount = DAYS.between(overlappingStart, overlappingEnd) + 1;
+                long dayCount = getOverlappingDays(start, end, budget);
                 ans += (double) budget.dailyAmount() * dayCount;
             }
             current = current.plusMonths(1);
         }
         return ans;
+    }
+
+    private long getOverlappingDays(LocalDate start, LocalDate end, Budget budget) {
+        long dayCount;
+        LocalDate overlappingStart;
+        LocalDate overlappingEnd;
+        if (budget.getMonth().equals(YearMonth.from(start))) {
+            overlappingStart = start;
+            overlappingEnd = budget.lastDay();
+        } else if (budget.getMonth().equals(YearMonth.from(end))) {
+            overlappingStart = budget.firstDay();
+            overlappingEnd = end;
+        } else {
+            overlappingStart = budget.firstDay();
+            overlappingEnd = budget.lastDay();
+        }
+        dayCount = DAYS.between(overlappingStart, overlappingEnd) + 1;
+        return dayCount;
     }
 
     private double getEntireMonth(LocalDate start, List<Budget> allBudgets) {
