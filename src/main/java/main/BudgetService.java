@@ -21,8 +21,8 @@ public class BudgetService {
         }
         List<Budget> allBudgets = repo.getAll();
         budgetMap = allBudgets.stream()
-                  .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
-        if (start.getYear() == end.getYear() && start.getMonthValue() == end.getMonthValue()) {
+                .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
+        if (YearMonth.from(start).equals(YearMonth.from(end))) {
             if (start.getDayOfMonth() == end.getDayOfMonth()) {
                 return getSingleDayBudget(start);
             }
@@ -45,9 +45,9 @@ public class BudgetService {
 
     private int getEntireMonth(LocalDate start, List<Budget> allBudgets) {
         return allBudgets.stream()
-                         .filter(budget -> budget.getYearMonth()
-                                                 .equals(getYearMonthOfDate(start)))
-                         .findFirst().get().getAmount();
+                .filter(budget -> budget.getYearMonth()
+                        .equals(getYearMonthOfDate(start)))
+                .findFirst().get().getAmount();
     }
 
     private String getYearMonthOfDate(LocalDate date) {
@@ -66,9 +66,9 @@ public class BudgetService {
 
     private double getSingleDayBudget(LocalDate date) {
         int budgetOfMonth = budgetMap.get(getYearMonthOfDate(date)) == null ?
-                            0 : budgetMap.get(getYearMonthOfDate(date)).getAmount();
+                0 : budgetMap.get(getYearMonthOfDate(date)).getAmount();
         int numberOfDay = getNumberOfDay(date);
-        return budgetOfMonth/numberOfDay;
+        return budgetOfMonth / numberOfDay;
     }
 
     private int getNumberOfDay(LocalDate date) {
