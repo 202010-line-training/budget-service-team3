@@ -23,9 +23,6 @@ public class BudgetService {
         budgetMap = allBudgets.stream()
                 .collect(Collectors.toMap(budget -> budget.getYearMonth(), budget -> budget));
         if (YearMonth.from(start).equals(YearMonth.from(end))) {
-            if (start.getDayOfMonth() == end.getDayOfMonth()) {
-                return getSingleDayBudget(start);
-            }
             final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth();
             return getSingleDayBudget(start) * (intervalDays + 1);
         }
