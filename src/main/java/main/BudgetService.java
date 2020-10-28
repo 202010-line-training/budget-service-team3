@@ -27,10 +27,7 @@ public class BudgetService {
                 return getSingleDayBudget(start);
             }
             final int intervalDays = end.getDayOfMonth() - start.getDayOfMonth();
-            if (intervalDays > 0) {
-                return getSingleDayBudget(start) * (intervalDays + 1);
-            }
-            return getEntireMonth(start, allBudgets);
+            return getSingleDayBudget(start) * (intervalDays + 1);
         }
 
         double ans = getFirstMonthBudget(start) + getLastMonthBudget(end);
